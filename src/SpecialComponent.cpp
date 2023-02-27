@@ -9,9 +9,15 @@
 #include <stdexcept>
 
 nts::TrueComponent::TrueComponent(std::string name)
-    : nts::AComponent(name, 1, std::vector<nts::APin>(1, nts::OutputPin(1, this)))
+    : nts::AComponent(name, 1, std::vector<Pin>{Pin(1, PinType::OUTPUT, *this)})
 {
-    getPin(1)->setValue(nts::TRUE);
+    getPin(1).setValue(nts::TRUE);
+}
+
+nts::TrueComponent::TrueComponent(nts::TrueComponent const &other)
+    : nts::AComponent(other)
+{
+
 }
 
 nts::Tristate nts::TrueComponent::compute(std::size_t pin)
@@ -23,9 +29,15 @@ nts::Tristate nts::TrueComponent::compute(std::size_t pin)
 }
 
 nts::FalseComponent::FalseComponent(std::string name)
-    : nts::AComponent(name, 1, std::vector<nts::APin>(1, nts::OutputPin(1, this)))
+    : nts::AComponent(name, 1, std::vector<Pin>{Pin(1, PinType::OUTPUT, *this)})
 {
-    getPin(1)->setValue(nts::FALSE);
+    getPin(1).setValue(nts::FALSE);
+}
+
+nts::FalseComponent::FalseComponent(nts::FalseComponent const &other)
+    : nts::AComponent(other)
+{
+
 }
 
 nts::Tristate nts::FalseComponent::compute(std::size_t pin)
@@ -37,7 +49,13 @@ nts::Tristate nts::FalseComponent::compute(std::size_t pin)
 }
 
 nts::InputComponent::InputComponent(std::string name)
-    : nts::AComponent(name, 1, std::vector<nts::APin>(1, nts::OutputPin(1, this)))
+    : nts::AComponent(name, 1, std::vector<Pin>{Pin(1, PinType::OUTPUT, *this)})
+{
+
+}
+
+nts::InputComponent::InputComponent(nts::InputComponent const &other)
+    : nts::AComponent(other)
 {
 
 }
@@ -47,11 +65,17 @@ nts::Tristate nts::InputComponent::compute(std::size_t pin)
     if (pin != 1) {
         throw std::out_of_range("Pin out of range");
     }
-    return getPin(1)->getValue();
+    return getPin(1).getValue();
 }
 
 nts::OutputComponent::OutputComponent(std::string name)
-    : nts::AComponent(name, 1, std::vector<nts::APin>(1, nts::InputPin(1, this)))
+    : nts::AComponent(name, 1, std::vector<Pin>{Pin(1, PinType::INPUT, *this)})
+{
+
+}
+
+nts::OutputComponent::OutputComponent(nts::OutputComponent const &other)
+    : nts::AComponent(other)
 {
 
 }
@@ -61,5 +85,5 @@ nts::Tristate nts::OutputComponent::compute(std::size_t pin)
     if (pin != 1) {
         throw std::out_of_range("Pin out of range");
     }
-    return getPin(1)->getValue();
+    return getPin(1).getValue();
 }

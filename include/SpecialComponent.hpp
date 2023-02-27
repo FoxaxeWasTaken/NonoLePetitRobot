@@ -12,7 +12,8 @@
 namespace nts {
     class TrueComponent : public nts::AComponent {
         public:
-            TrueComponent(std::string name = "True");
+            TrueComponent(std::string name);
+            TrueComponent(const TrueComponent &);
             ~TrueComponent() override = default;
 
             nts::Tristate compute(std::size_t pin) override;
@@ -20,7 +21,8 @@ namespace nts {
 
     class FalseComponent : public nts::AComponent {
         public:
-            FalseComponent(std::string name = "False");
+            FalseComponent(std::string name);
+            FalseComponent(const FalseComponent &);
             ~FalseComponent() override = default;
 
             nts::Tristate compute(std::size_t pin) override;
@@ -28,7 +30,8 @@ namespace nts {
 
     class InputComponent : public nts::AComponent {
         public:
-            InputComponent(std::string name = "Input");
+            InputComponent(std::string name);
+            InputComponent(const InputComponent &);
             ~InputComponent() override = default;
 
             nts::Tristate compute(std::size_t pin) override;
@@ -36,7 +39,8 @@ namespace nts {
 
     class OutputComponent : public nts::AComponent {
         public:
-            OutputComponent(std::string name = "Output");
+            OutputComponent(std::string name);
+            OutputComponent(const OutputComponent &);
             ~OutputComponent() override = default;
 
             nts::Tristate compute(std::size_t pin) override;

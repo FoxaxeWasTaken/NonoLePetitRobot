@@ -12,28 +12,32 @@
 namespace nts {
     class AndComponent : public AComponent {
         public:
-            AndComponent(std::string name = "And");
+            AndComponent(std::string name);
+            AndComponent(const AndComponent &);
             ~AndComponent() override = default;
 
             nts::Tristate compute(std::size_t pin) override;
     };
     class OrComponent : public AComponent {
         public:
-            OrComponent(std::string name = "Or");
+            OrComponent(std::string);
+            OrComponent(const OrComponent &);
             ~OrComponent() override = default;
 
             nts::Tristate compute(std::size_t pin) override;
     };
     class XorComponent : public AComponent{
         public:
-            XorComponent(std::string name = "Xor");
+            XorComponent(std::string);
+            XorComponent(const XorComponent &);
             ~XorComponent() override = default;
 
             nts::Tristate compute(std::size_t pin) override;
     };
     class NotComponent : public AComponent {
         public:
-            NotComponent(std::string name = "Not");
+            NotComponent(std::string);
+            NotComponent(const NotComponent &);
             ~NotComponent() override = default;
 
             nts::Tristate compute(std::size_t pin) override;

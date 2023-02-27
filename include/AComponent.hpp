@@ -7,30 +7,26 @@
 
 #pragma once
 
-#include <vector>
-#include <string>
-#include <memory>
 #include "IComponent.hpp"
-#include "Pin.hpp"
 
 namespace nts {
-
     class AComponent : public IComponent {
         public:
-            AComponent(std::string name, size_t nbPins, std::vector<nts::APin> pins);
+            AComponent(std::string name, size_t nbPins, std::vector<nts::Pin> pins);
+            AComponent(const AComponent &);
             virtual ~AComponent() override = default;
 
             void simulate(std::size_t tick) override {}
             virtual nts::Tristate compute(std::size_t pin) = 0;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) override;
-            std::string getName() const;
-            size_t getNbPins() const;
-            std::vector<nts::APin> getPins() const;
-            nts::APin *getPin(std::size_t pin) const;
+            std::string getName() const override;
+            size_t getNbPins() const override;
+            std::vector<nts::Pin> getPins() const;
+            nts::Pin &getPin(size_t index) override;
 
         private:
             std::string _name;
             size_t _nbPins;
-            std::vector<nts::APin> _pins;
+            std::vector<nts::Pin> _pins;
     };
 }
