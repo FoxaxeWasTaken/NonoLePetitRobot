@@ -12,6 +12,8 @@ SRC			=	src/AComponent.cpp			\
 				src/SpecialComponent.cpp	\
 				src/Circuit.cpp				\
 				src/ComponentFactory.cpp
+				src/SpecialComponent.cpp 	\
+				src/Parser.cpp
 
 OBJ			=	$(SRC:.cpp=.o)
 
