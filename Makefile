@@ -9,7 +9,8 @@ SRC			=	src/AComponent.cpp			\
 				src/ElementaryComponent.cpp	\
 				src/main.cpp				\
 				src/Pin.cpp					\
-				src/SpecialComponent.cpp
+				src/SpecialComponent.cpp 	\
+				src/Parser.cpp
 
 OBJ			=	$(SRC:.cpp=.o)
 
