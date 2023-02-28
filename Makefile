@@ -9,7 +9,9 @@ SRC			=	src/AComponent.cpp			\
 				src/ElementaryComponent.cpp	\
 				src/main.cpp				\
 				src/Pin.cpp					\
-				src/SpecialComponent.cpp
+				src/SpecialComponent.cpp	\
+				src/Circuit.cpp				\
+				src/ComponentFactory.cpp
 
 OBJ			=	$(SRC:.cpp=.o)
 
@@ -17,7 +19,7 @@ NAME		=	nanotekspice
 
 GCC			=	g++
 
-CPPFLAGS	=	 -std=c++20 -I./include #-Wall -Wextra -Werror
+CPPFLAGS	=	 -std=c++20 -I./include -Wall -Wextra -Werror
 
 DEBUG_FLAGS	=	-g
 

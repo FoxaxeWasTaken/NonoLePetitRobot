@@ -16,7 +16,7 @@ namespace nts {
             AComponent(const AComponent &);
             virtual ~AComponent() override = default;
 
-            void simulate(std::size_t tick) override {}
+            void simulate(std::size_t tick) override {(void)tick;};
             virtual nts::Tristate compute(std::size_t pin) = 0;
             void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin) override;
             std::string getName() const override;
@@ -30,3 +30,5 @@ namespace nts {
             std::vector<nts::Pin> _pins;
     };
 }
+
+std::ostream &operator <<(std::ostream &s, nts::Tristate v);

@@ -64,3 +64,19 @@ void nts::AComponent::setLink(std::size_t pin, nts::IComponent &other, std::size
         throw std::invalid_argument("Pin type is not compatible");
     }
 }
+
+std::ostream &operator <<(std::ostream &s, nts::Tristate v)
+{
+    switch (v) {
+        case nts::Tristate::UNDEFINED:
+            s << "U";
+            break;
+        case nts::Tristate::TRUE:
+            s << "1";
+            break;
+        case nts::Tristate::FALSE:
+            s << "0";
+            break;
+    }
+    return s;
+}
