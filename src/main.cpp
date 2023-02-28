@@ -7,10 +7,13 @@
 
 #include "ComponentFactory.hpp"
 #include "Circuit.hpp"
+#include "Parser.hpp"
 #include <iostream>
 
-int main(void)
+int main(int argc, char **argv)
 {
+    if (argc != 2)
+        return 84;
     // std::unique_ptr<nts::IComponent> gate = std::make_unique<nts::OrComponent>("gate");
     // std::unique_ptr<nts::IComponent> input1 = std::make_unique<nts::FalseComponent>("input1");
     // std::unique_ptr<nts::IComponent> input2 = std::make_unique<nts::TrueComponent>("input2");
@@ -22,27 +25,39 @@ int main(void)
     // inverter->setLink(1, *gate, 3);
     // std::cout << "!(" << input1->compute(1) << " || " << input2->compute(1) << ") -> " << inverter->compute(2) << std::endl;
     // return 0;
-    nts::Circuit circuit;
-    nts::ComponentFactory factory;
-    circuit.addComponent(factory.createComponent("input", "input1"));
-    circuit.addComponent(factory.createComponent("clock", "clock"));
-    circuit.addComponent(factory.createComponent("output", "output"));
-    circuit.addComponent(factory.createComponent("and", "gate"));
-    circuit.addComponent(factory.createComponent("not", "inverter"));
-    static_cast<nts::InputComponent *>(circuit.getComponent("input1").get())->setBuf(true);
-    static_cast<nts::ClockComponent *>(circuit.getComponent("clock").get())->setBuf(true);
-    static_cast<nts::InputComponent *>(circuit.getComponent("input1").get())->setBufVal(nts::FALSE);
-    static_cast<nts::ClockComponent *>(circuit.getComponent("clock").get())->setBufVal(nts::TRUE);
-    circuit.setLink("input1", 1, "gate", 1);
-    circuit.setLink("clock", 1, "gate", 2);
-    circuit.setLink("gate", 3, "inverter", 1);
-    circuit.setLink("inverter", 2, "output", 1);
-    circuit.display();
-    std::cout << std::endl;
-    circuit.simulate(1);
-    circuit.display();
-    std::cout << std::endl;
-    circuit.simulate(1);
-    circuit.display();
+    //nts::Circuit circuit;
+    //nts::ComponentFactory factory;
+    Parser parser(argv[1]);
+    parser.parse_the_file();
+    parser.delete_comment();
+    parser.check_if_good_order();
+    parser.recup_chipsets();
+    parser.set_chipset_lines();
+    parser.set_links_lines();
+    parser.create_circuit(parser.get_chipset_lines(), parser.get_links_lines());
+
+
+
+    //circuit.addComponent(factory.createComponent("input", "input1"));
+    //circuit.addComponent(factory.createComponent("clock", "clock"));
+    //circuit.addComponent(factory.createComponent("output", "output"));
+    //circuit.addComponent(factory.createComponent("and", "gate"));
+    //circuit.addComponent(factory.createComponent("not", "inverter"));
+    //static_cast<nts::InputComponent *>(circuit.getComponent("input1").get())->setBuf(true);
+    //static_cast<nts::ClockComponent *>(circuit.getComponent("clock").get())->setBuf(true);
+    //static_cast<nts::InputComponent *>(circuit.getComponent("input1").get())->setBufVal(nts::FALSE);
+    //static_cast<nts::ClockComponent *>(circuit.getComponent("clock").get())->setBufVal(nts::TRUE);
+    
+    //circuit.setLink("input1", 1, "gate", 1);
+    //circuit.setLink("clock", 1, "gate", 2);
+    //circuit.setLink("gate", 3, "inverter", 1);
+    //circuit.setLink("inverter", 2, "output", 1);
+    //circuit.display();
+    //std::cout << std::endl;
+    //circuit.simulate(1);
+    //circuit.display();
+    //std::cout << std::endl;
+    //circuit.simulate(1);
+    //circuit.display();
     return 0;
 }
