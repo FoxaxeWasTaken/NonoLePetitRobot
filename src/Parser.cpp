@@ -89,7 +89,6 @@ bool Parser::check_chipset_type(std::string type)
             return false;
     }
     return true;
-    //TODO Add a list of the valid type
 }
 
 void Parser::recup_chipsets()
@@ -130,24 +129,3 @@ void Parser::set_links_lines()
         }
     }
 }
-
-//void Parser::create_all_pins()
-//{
-//    std::string name;
-//    std::string type;
-//    std::string line;
-//    std::string delimiter = " ";
-//    size_t pos = 0;
-//
-//    for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
-//        if ((*it).find_first_of(".") != 0 ){
-//            line = *it;
-//            while ((pos = line.find(delimiter)) != std::string::npos) {
-//                name = line.substr(0, pos);
-//                line.erase(0, pos + delimiter.length());
-//            }
-//            type = line;
-//            _all_pins.push_back(nts::APin(name, type));
-//        }
-//    }
-//}
