@@ -89,7 +89,10 @@ nts::Tristate nts::Pin::computePrev() const
 {
     if (getType() != nts::PinType::INPUT)
         throw std::runtime_error("Pin is not an input");
-    return _prevPins[0]->getComponent().compute(_prevPins[0]->getIdxPin());
+    if (getNbPrevPins() == 0) {
+        return nts::UNDEFINED;
+    }
+    return getPrevPin(0)->getComponent().compute(getPrevPin(0)->getIdxPin());
 }
 
 std::size_t nts::Pin::getNbPrevPins() const
