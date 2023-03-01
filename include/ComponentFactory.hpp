@@ -11,6 +11,7 @@
 #include "ElementaryComponent.hpp"
 #include "Component4030.hpp"
 #include "Component4069.hpp"
+#include "Component4071.hpp"
 #include <functional>
 #include <map>
 
@@ -34,7 +35,8 @@ namespace nts {
                 {"xor", [](std::string const &name) { return std::make_unique<nts::XorComponent>(name); }},
                 {"not", [](std::string const &name) { return std::make_unique<nts::NotComponent>(name); }},
                 {"4030", [](std::string const &name) { return std::make_unique<nts::Component4030>(name); }},
-                {"4069", [](std::string const &name) { return std::make_unique<nts::Component4069>(name); }}
+                {"4069", [](std::string const &name) { return std::make_unique<nts::Component4069>(name); }},
+                {"4071", [](std::string const &name) { return std::make_unique<nts::Component4071>(name); }},
             };
     };
 }

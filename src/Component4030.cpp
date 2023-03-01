@@ -60,20 +60,15 @@ nts::Tristate nts::Component4030::compute(std::size_t pin)
 {
     if (pin == 0 || pin > getNbPins())
         throw std::out_of_range("4030Component: Pin out of range.");
-    if (pin == 3) {
+    if (pin == 3)
         return getXor(0).compute(3);
-    }
-    if (pin == 4) {
+    if (pin == 4)
         return getXor(1).compute(3);
-    }
-    if (pin == 10) {
+    if (pin == 10)
         return getXor(2).compute(3);
-    }
-    if (pin == 11) {
+    if (pin == 11)
         return getXor(3).compute(3);
-    }
-    if (getPin(pin).getType() == PinType::OTHER) {
+    if (getPin(pin).getType() == PinType::OTHER)
         return nts::UNDEFINED;
-    }
     return getPin(pin).computePrev();
 }
