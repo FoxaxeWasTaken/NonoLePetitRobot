@@ -49,12 +49,8 @@ void Parser::delete_comment()
     size_t pos = 0;
 
     for (auto it = _all_file.begin(); it != _all_file.end(); it++) {
-        //if ((*it).find_first_of("#") != 0 ){
-        //    _all_lines.push_back(*it);
-        //}
         pos = (*it).find('#');
         if (pos != std::string::npos) {
-            std::cout << "pos: " << pos << std::endl;
             (*it).erase(pos, (*it).length());
             _all_lines.push_back(*it);
         } else
@@ -158,7 +154,7 @@ std::string Parser::name_component(std::string lines)
     size_t pos = 0;
 
     pos = lines.find(delimiter);
-    name = lines.substr(pos);
+    name = lines.substr(pos + 1);
     return name;
 }
 
@@ -180,20 +176,26 @@ void Parser::create_circuit(std::vector<std::string> _all_chipset, std::vector<s
     nts::ComponentFactory factory;
 
     for (auto it = _all_chipset.begin(); it != _all_chipset.end(); it++) {
-        //circuit.addComponent(factory.createComponent(type_component(*it), name_component(*it)));
-        std::cout << "name = " << name_component(*it) << std::endl;
-        std::cout << "type = " << type_component(*it) << std::endl;
+        circuit.addComponent(factory.createComponent(type_component(*it), name_component(*it)));
+        //std::cout << type_component(*it) << std::endl;
+        //std::cout << circuit.getComponent(name_component(*it))->getName() << std::endl;
+        //std::cout << "name = " << name_component(*it) << std::endl;
+        //std::cout << circuit.getComponent(name_component(*it))->getName() << std::endl;
+        //std::cout << "name = " << name_component(*it) << std::endl;
+        //std::cout << "type = " << type_component(*it) << std::endl;
     }
 
-    //for (auto ti = _link_vector.begin(); ti != _link_vector.end(); ti++) {
-        //std::cout << "comp 1 = " << ti->get_component_1() << std::endl;
-        //std::cout << "comp 2 = " << ti->get_component_2() << std::endl;
-        //std::cout << "pin 1 = " << ti->get_pin_1() << std::endl;
-        //std::cout << "pin 2 = " << ti->get_pin_2() << std::endl;
+    //for (auto ti = _links_lines.begin(); ti != _links_lines.end(); ti++) {
+        auto ti = _links_lines.begin();
+        auto test = _link_vector.begin();
+        //std::cout << test->get_component_1() << std::endl;
+        std::cout << "comp 1 = " << test->get_component_1() << std::endl;
+        std::cout << "comp 2 = " << test->get_component_2() << std::endl;
+        std::cout << "pin 1 = " << test->get_pin_1() << std::endl;
+        std::cout << "pin 2 = " << test->get_pin_2() << std::endl;
+        circuit.setLink(test->get_component_1(), test->get_pin_1(), test->get_component_2(), test->get_pin_2());
+        test++;
+        ti++;
     //}
 
-    for (auto it = _links_lines.begin(); it != _links_lines.end(); it++) {
-        //std::cout << _link_vector[].get_component_1() << std::endl;
-        //circuit.setLink(name_component_link(*it), name_component_link(*it), );
-    }
 }

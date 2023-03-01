@@ -36,8 +36,6 @@ int main(int argc, char **argv)
     parser.set_links_lines();
     parser.create_circuit(parser.get_chipset_lines(), parser.get_links_lines());
 
-
-
     //circuit.addComponent(factory.createComponent("input", "input1"));
     //circuit.addComponent(factory.createComponent("clock", "clock"));
     //circuit.addComponent(factory.createComponent("output", "output"));
