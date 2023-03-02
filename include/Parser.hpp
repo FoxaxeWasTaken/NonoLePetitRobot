@@ -12,9 +12,8 @@
 #include <vector>
 #include <string>
 #include "Chipset.hpp"
-//#include "APin.hpp"
-
-
+#include "Link.hpp"
+#include "Circuit.hpp"
 
 class Parser {
     enum {
@@ -32,15 +31,22 @@ class Parser {
         std::vector<std::string> get_chipset_lines(){return _chipset_lines;};
         std::vector<std::string> get_links_lines(){return _links_lines;};
         std::vector<Chipset> get_chipsets(){return chipsets;};
+        std::vector<Link> get_links(){return _link_vector;};
 
+        void delete_unwanted_trailing_space();
         bool check_file_is_ok(){return _file_is_ok;};
         bool check_chipset_type(std::string type);
-        //TODOajout d'une fonction de check du nom de chaque component/pin etc
+        bool check_if_good_order();
+
+        std::unique_ptr<nts::Circuit> create_circuit(std::vector<std::string> _all_chipset);
+        std::string name_component(std::string lines);
         void print_all_lines(std::vector<std::string> lines);
-        void check_if_good_order();
+        std::string type_component(std::string lines);
+
         void set_chipset_lines();
         void set_links_lines();
         void recup_chipsets();
+
         //void create_all_pins();
         //void create_all_links();
 
@@ -55,5 +61,5 @@ class Parser {
 
         bool _file_is_ok = true;
         bool _chipset_first = false;
-        //std::vector<nts::APin> _all_pins;
+        std::vector<Link> _link_vector;
 };
