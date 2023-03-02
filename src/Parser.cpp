@@ -59,18 +59,36 @@ void Parser::delete_comment()
 
 };
 
-void Parser::check_if_good_order()
+void Parser::delete_unwanted_trailing_space()
+{
+    for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
+        if ((*it).find(' ') != std::string::npos) {
+            for (int i = 0; (*it).data()[i] != '\0'; i++ ) {
+                if ((*it).data()[i] != ' ')
+                    continue;
+                else {
+                    if (((*it).data()[i] == ' ' && ((*it).data()[i + 1]) == ' ') || (*it).data()[0] == ' ') {
+                        (*it).erase(i, 1);
+                        i--;
+                    }
+                }
+            }
+        }
+    }
+}
+
+bool Parser::check_if_good_order()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
         if ((*it).compare(".chipsets:") == 0)
             this->_chipset_first = true;
         if ((*it).compare(".links:") == 0 && this->_chipset_first == true) {
             this->_file_is_ok = true;
-            return;
+            return this->_file_is_ok;
         }
     }
-    this->_file_is_ok = false;
     std::cerr << "Error in file: missing instruction or bad order" << std::endl;
+    return (this->_file_is_ok = false);
 }
 
 void Parser::set_chipset_lines()

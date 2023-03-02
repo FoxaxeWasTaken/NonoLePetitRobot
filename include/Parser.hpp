@@ -33,13 +33,14 @@ class Parser {
         std::vector<Chipset> get_chipsets(){return chipsets;};
         std::vector<Link> get_links(){return _link_vector;};
 
+        void delete_unwanted_trailing_space();
         bool check_file_is_ok(){return _file_is_ok;};
         bool check_chipset_type(std::string type);
+        bool check_if_good_order();
 
         std::unique_ptr<nts::Circuit> create_circuit(std::vector<std::string> _all_chipset);
         std::string name_component(std::string lines);
         void print_all_lines(std::vector<std::string> lines);
-        void check_if_good_order();
         std::string type_component(std::string lines);
 
         void set_chipset_lines();
