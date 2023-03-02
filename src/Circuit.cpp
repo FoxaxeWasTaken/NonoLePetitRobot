@@ -61,7 +61,7 @@ void nts::Circuit::display()
     std::cout << "tick: " << _tick << std::endl;
     std::cout << "input(s):" << std::endl;
     for (auto &component : _components) {
-        if (dynamic_cast<nts::InputComponent *>(component.get()) || dynamic_cast<nts::ClockComponent *>(component.get()) || dynamic_cast<nts::TrueComponent *>(component.get()) || dynamic_cast<nts::FalseComponent *>(component.get())) {
+        if (dynamic_cast<nts::InputComponent *>(component.get()) || dynamic_cast<nts::ClockComponent *>(component.get())) {
             std::cout << component->getName() << ": " << component->getPin(1).getValue() << std::endl;
         }
     }

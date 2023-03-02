@@ -5,7 +5,7 @@
 ** Component4071
 */
 
-#include "../include/Component4071.hpp"
+#include "Component4071.hpp"
 
 nts::Component4071::Component4071(std::string name)
     : AComponent(name, 14, std::vector<Pin>{
