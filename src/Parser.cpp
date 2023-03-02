@@ -81,8 +81,6 @@ void Parser::set_chipset_lines()
             while ((*it).compare(".links:") != 0) {
                 if ((*it).compare("\0") == 0)
                     return;
-                if (isdigit((*it).data()[0]))
-                    it++;
                 else {
                     _chipset_lines.push_back(*it);
                     it++;
@@ -101,30 +99,6 @@ bool Parser::check_chipset_type(std::string type)
             return false;
     }
     return true;
-}
-
-void Parser::recup_chipsets()
-{
-    std::string name;
-    std::string type;
-    std::string line;
-    std::string delimiter = " ";
-    size_t pos = 0;
-
-    for (auto it = _chipset_lines.begin(); it != _chipset_lines.end(); it++) {
-        line = *it;
-        if (isdigit((*it).data()[0])) {
-            while ((pos = line.find(delimiter)) != std::string::npos) {
-                type = line.substr(0, pos);
-                line.erase(0, pos + delimiter.length());
-            }
-            name = line;
-            if (check_chipset_type(type))
-                chipsets.push_back(Chipset(name, type));
-            else
-                std::cerr << "Error in file: bad chipset type" << std::endl;
-        }
-    }
 }
 
 void Parser::set_links_lines()

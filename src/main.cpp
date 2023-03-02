@@ -31,7 +31,6 @@ int main(int argc, char **argv)
     parser.parse_the_file();
     parser.delete_comment();
     parser.check_if_good_order();
-    parser.recup_chipsets();
     parser.set_chipset_lines();
     parser.set_links_lines();
     parser.create_circuit(parser.get_chipset_lines(), parser.get_links_lines());
