@@ -13,8 +13,7 @@
 #include <string>
 #include "Chipset.hpp"
 #include "Link.hpp"
-
-
+#include "Circuit.hpp"
 
 class Parser {
     enum {
@@ -37,7 +36,7 @@ class Parser {
         bool check_file_is_ok(){return _file_is_ok;};
         bool check_chipset_type(std::string type);
 
-        void create_circuit(std::vector<std::string> _all_chipset, std::vector<std::string> _links_lines);
+        std::unique_ptr<nts::Circuit> create_circuit(std::vector<std::string> _all_chipset);
         std::string name_component(std::string lines);
         void print_all_lines(std::vector<std::string> lines);
         void check_if_good_order();

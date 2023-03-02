@@ -33,8 +33,15 @@ int main(int argc, char **argv)
     parser.check_if_good_order();
     parser.set_chipset_lines();
     parser.set_links_lines();
-    parser.create_circuit(parser.get_chipset_lines(), parser.get_links_lines());
-
+    std::unique_ptr<nts::Circuit> circuit = parser.create_circuit(parser.get_chipset_lines());
+    circuit->display();
+    // tkt pout les cast c'est juste pour modifier les valeurs des inputs (faudra faire ca dans le shell)
+    static_cast<nts::InputComponent *>(circuit->getComponent("in_1").get())->setBuf(true);
+    static_cast<nts::InputComponent *>(circuit->getComponent("in_1").get())->setBufVal(nts::FALSE);
+    static_cast<nts::InputComponent *>(circuit->getComponent("in_2").get())->setBuf(true);
+    static_cast<nts::InputComponent *>(circuit->getComponent("in_2").get())->setBufVal(nts::TRUE);
+    circuit->simulate(1);
+    circuit->display();
     //circuit.addComponent(factory.createComponent("input", "input1"));
     //circuit.addComponent(factory.createComponent("clock", "clock"));
     //circuit.addComponent(factory.createComponent("output", "output"));
@@ -44,7 +51,7 @@ int main(int argc, char **argv)
     //static_cast<nts::ClockComponent *>(circuit.getComponent("clock").get())->setBuf(true);
     //static_cast<nts::InputComponent *>(circuit.getComponent("input1").get())->setBufVal(nts::FALSE);
     //static_cast<nts::ClockComponent *>(circuit.getComponent("clock").get())->setBufVal(nts::TRUE);
-    
+
     //circuit.setLink("input1", 1, "gate", 1);
     //circuit.setLink("clock", 1, "gate", 2);
     //circuit.setLink("gate", 3, "inverter", 1);

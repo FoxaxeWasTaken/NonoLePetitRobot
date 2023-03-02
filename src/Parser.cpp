@@ -143,33 +143,16 @@ std::string Parser::type_component(std::string lines)
     return type;
 }
 
-
-void Parser::create_circuit(std::vector<std::string> _all_chipset, std::vector<std::string> _links_lines)
+std::unique_ptr<nts::Circuit> Parser::create_circuit(std::vector<std::string> _all_chipset)
 {
-    nts::Circuit circuit;
+    std::unique_ptr<nts::Circuit> circuit = std::make_unique<nts::Circuit>();
     nts::ComponentFactory factory;
 
     for (auto it = _all_chipset.begin(); it != _all_chipset.end(); it++) {
-        circuit.addComponent(factory.createComponent(type_component(*it), name_component(*it)));
-        //std::cout << type_component(*it) << std::endl;
-        //std::cout << circuit.getComponent(name_component(*it))->getName() << std::endl;
-        //std::cout << "name = " << name_component(*it) << std::endl;
-        //std::cout << circuit.getComponent(name_component(*it))->getName() << std::endl;
-        //std::cout << "name = " << name_component(*it) << std::endl;
-        //std::cout << "type = " << type_component(*it) << std::endl;
+        circuit->addComponent(factory.createComponent(type_component(*it), name_component(*it)));
     }
-
-    //for (auto ti = _links_lines.begin(); ti != _links_lines.end(); ti++) {
-        auto ti = _links_lines.begin();
-        auto test = _link_vector.begin();
-        //std::cout << test->get_component_1() << std::endl;
-        std::cout << "comp 1 = " << test->get_component_1() << std::endl;
-        std::cout << "comp 2 = " << test->get_component_2() << std::endl;
-        std::cout << "pin 1 = " << test->get_pin_1() << std::endl;
-        std::cout << "pin 2 = " << test->get_pin_2() << std::endl;
-        circuit.setLink(test->get_component_1(), test->get_pin_1(), test->get_component_2(), test->get_pin_2());
-        test++;
-        ti++;
-    //}
-
+    for (auto it = _link_vector.begin(); it != _link_vector.end(); it++) {
+        circuit->setLink(it->get_component_1(), it->get_pin_1(), it->get_component_2(), it->get_pin_2());
+    }
+    return circuit;
 }
