@@ -18,7 +18,9 @@ SRC			=	src/AComponent.cpp			\
 				src/Component4069.cpp		\
 				src/Component4071.cpp		\
 				src/Component4081.cpp		\
-				src/Global_loop.cpp
+				src/Global_loop.cpp     \
+				src/Component4001.cpp		\
+				src/Component4011.cpp
 
 OBJ			=	$(SRC:.cpp=.o)
 
