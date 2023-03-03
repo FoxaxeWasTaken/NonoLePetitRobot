@@ -14,4 +14,21 @@
 #include "Link.hpp"
 #include "Circuit.hpp"
 
-void global_loop(std::shared_ptr<nts::Circuit> circuit);
+
+class Global_loop {
+    public:
+        Global_loop(std::shared_ptr<nts::Circuit> circuit);
+        ~Global_loop(){};
+        void global_loop();
+        void modif_value_component(std::string input);
+        std::shared_ptr<nts::Circuit> get_circuit(){return _circuit;};
+        void check_if_name_valid(std::string input);
+        void check_value(std::string input);
+
+
+    private:
+        std::shared_ptr<nts::Circuit> _circuit;
+        std::string _name;
+        std::string _value;
+
+};

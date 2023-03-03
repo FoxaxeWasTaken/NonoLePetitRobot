@@ -24,6 +24,7 @@ int main(int argc, char **argv)
     parser.set_chipset_lines();
     parser.set_links_lines();
     std::shared_ptr<nts::Circuit> circuit = parser.create_circuit(parser.get_chipset_lines());
-    global_loop(circuit);
+    Global_loop main_loop(circuit);
+    main_loop.global_loop();
     return 0;
 }
