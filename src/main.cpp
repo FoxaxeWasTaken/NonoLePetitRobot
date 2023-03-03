@@ -9,6 +9,7 @@
 #include "Circuit.hpp"
 #include "Parser.hpp"
 #include <iostream>
+#include "Global_loop.hpp"
 
 int main(int argc, char **argv)
 {
@@ -22,9 +23,10 @@ int main(int argc, char **argv)
     parser.delete_unwanted_trailing_space();
     parser.set_chipset_lines();
     parser.set_links_lines();
-    std::unique_ptr<nts::Circuit> circuit = parser.create_circuit(parser.get_chipset_lines());
-    circuit->display();
-    circuit->simulate(1);
-    circuit->display();
+    std::shared_ptr<nts::Circuit> circuit = parser.create_circuit(parser.get_chipset_lines());
+    global_loop(circuit);
+    //circuit->display();
+    //circuit->simulate(1);
+    //circuit->display();
     return 0;
 }
