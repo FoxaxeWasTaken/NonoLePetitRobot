@@ -79,7 +79,7 @@ void Parser::delete_unwanted_trailing_space()
                 if ((*it).data()[i] != ' ')
                     continue;
                 else {
-                    if (((*it).data()[i] == ' ' && ((*it).data()[i + 1]) == ' ') || (*it).data()[0] == ' ') {
+                    if (((*it).data()[i] == ' ' && ((*it).data()[i + 1]) == ' ') || (*it).data()[0] == ' ' || (*it).data()[(*it).length() - 1] == ' ') {
                         (*it).erase(i, 1);
                         i--;
                     }
