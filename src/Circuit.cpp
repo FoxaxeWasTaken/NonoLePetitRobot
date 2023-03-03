@@ -62,13 +62,13 @@ void nts::Circuit::display()
     std::cout << "input(s):" << std::endl;
     for (auto &component : _components) {
         if (dynamic_cast<nts::InputComponent *>(component.get()) || dynamic_cast<nts::ClockComponent *>(component.get())) {
-            std::cout << component->getName() << ": " << component->getPin(1).getValue() << std::endl;
+            std::cout << "  " << component->getName() << ": " << component->getPin(1).getValue() << std::endl;
         }
     }
     std::cout << "output(s):" << std::endl;
     for (auto &component : _components) {
         if (dynamic_cast<nts::OutputComponent *>(component.get())) {
-            std::cout << component->getName() << ": " << component->getPin(1).getValue() << std::endl;
+            std::cout << "  " << component->getName() << ": " << component->getPin(1).getValue() << std::endl;
         }
     }
 }
