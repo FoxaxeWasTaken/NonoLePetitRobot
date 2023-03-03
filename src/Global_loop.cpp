@@ -65,12 +65,10 @@ void Global_loop::check_value(std::string input)
         state = nts::Tristate::TRUE;
     else
         throw ("there is error");
-    std::cout << "test" << state << std::endl;
 
     if (dynamic_cast<nts::InputComponent *>(_circuit->getComponent(_name).get())) {
         static_cast<nts::InputComponent *>(_circuit->getComponent(_name).get())->setBuf(true);
         static_cast<nts::InputComponent *>(_circuit->getComponent(_name).get())->setBufVal((state));
-        std::cout << "inputssssss"<< std::endl;
     } else if (dynamic_cast<nts::ClockComponent *>(_circuit->getComponent(_name).get())) {
         static_cast<nts::ClockComponent *>(_circuit->getComponent(_name).get())->setBuf(true);
         static_cast<nts::ClockComponent *>(_circuit->getComponent(_name).get())->setBufVal((state));
