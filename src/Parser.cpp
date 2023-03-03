@@ -52,7 +52,8 @@ void Parser::delete_comment()
         pos = (*it).find('#');
         if (pos != std::string::npos) {
             (*it).erase(pos, (*it).length());
-            _all_lines.push_back(*it);
+            if (!it->empty())
+                _all_lines.push_back(*it);
         } else
             _all_lines.push_back(*it);
     }
@@ -147,6 +148,9 @@ std::string Parser::name_component(std::string lines)
 
     pos = lines.find(delimiter);
     name = lines.substr(pos + 1);
+    pos = name.find(' ');
+    if (pos != std::string::npos)
+        name.erase(pos, 1);
     return name;
 }
 
