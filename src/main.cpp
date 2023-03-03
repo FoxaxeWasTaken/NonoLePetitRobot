@@ -16,6 +16,7 @@ int main(int argc, char **argv)
     if (argc != 2)
         return 84;
     Parser parser(argv[1]);
+    parser.check_path();
     parser.parse_the_file();
     parser.delete_comment();
     if (parser.check_if_good_order() == false)

@@ -19,6 +19,17 @@ Parser::~Parser()
 {
 };
 
+void Parser::check_path()
+{
+    if (_path.find(".nts") == std::string::npos) {
+        std::cerr << "Error: file is not a .nts file" << std::endl;
+        exit(84);
+    }
+    size_t pos = _path.find(".nts");
+    if ((pos + 4) != _path.length())
+        throw ("file is not a .nts");
+}
+
 std::vector<std::string> Parser::get_all_file()
 {
     return _all_file;

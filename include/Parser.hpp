@@ -25,6 +25,7 @@ class Parser {
         Parser(std::string path);
         ~Parser();
         void parse_the_file();
+        void check_path();
         void delete_comment();
         std::vector<std::string> get_all_file();
         std::vector<std::string> get_all_lines(){return _all_lines;};
