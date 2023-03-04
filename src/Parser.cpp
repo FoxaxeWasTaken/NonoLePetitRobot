@@ -102,7 +102,7 @@ void Parser::transform_tab_into_space()
 void Parser::delete_empty_lines()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
-        if ((*it).compare("\n") == 0)
+        if ((*it).size() == 0)
             _all_lines.erase(it);
     }
 }
