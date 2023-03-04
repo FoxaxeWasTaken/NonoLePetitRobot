@@ -48,7 +48,7 @@ std::unique_ptr<nts::IComponent> &nts::Circuit::getComponent(std::string const &
         if (component->getName() == name)
             return component;
     }
-    throw std::runtime_error("Component not found");
+    throw std::runtime_error("getComponent: Component not found");
 }
 
 void nts::Circuit::addTick(std::size_t tick)

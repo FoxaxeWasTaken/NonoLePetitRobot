@@ -54,22 +54,20 @@ std::vector<std::shared_ptr<nts::Pin>> nts::Pin::getNextPins() const
 
 std::shared_ptr<nts::Pin> nts::Pin::getNextPin(size_t index) const
 {
-    if (index >= getNbNextPins())
-        throw std::out_of_range("getNextPin: Index out of range");
     return _nextPins[index];
 }
 
 void nts::Pin::addNextPin(std::shared_ptr<nts::Pin> nextPin)
 {
     if (getType() == nts::PinType::INPUT && _nextPins.size() == 1)
-        throw std::runtime_error("Input pin already has a next pin");
+        throw std::runtime_error("addNextPin: Input pin already has a next pin");
     _nextPins.push_back(nextPin);
 }
 
 void nts::Pin::addPrevPin(std::shared_ptr<nts::Pin> prevPin)
 {
     if (getType() == nts::PinType::INPUT && getNbPrevPins() == 1)
-        throw std::runtime_error("Input pin already has a prev pin");
+        throw std::runtime_error("addPrevPin: Input pin already has a prev pin");
     _prevPins.push_back(prevPin);
 }
 
@@ -80,15 +78,11 @@ std::vector<std::shared_ptr<nts::Pin>> nts::Pin::getPrevPins() const
 
 std::shared_ptr<nts::Pin> nts::Pin::getPrevPin(size_t index) const
 {
-    if (index >= getNbPrevPins())
-        throw std::out_of_range("getPrevPin: Index out of range");
     return _prevPins[index];
 }
 
 nts::Tristate nts::Pin::computePrev() const
 {
-    if (getType() != nts::PinType::INPUT)
-        throw std::runtime_error("Pin is not an input");
     if (getNbPrevPins() == 0) {
         return nts::UNDEFINED;
     }

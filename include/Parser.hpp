@@ -38,9 +38,8 @@ class Parser {
         std::vector<Link> get_links(){return _link_vector;};
 
         void delete_unwanted_trailing_space();
-        bool check_file_is_ok(){return _file_is_ok;};
         bool check_chipset_type(std::string type);
-        bool check_if_good_order();
+        void check_if_good_order();
         void count_chipset_and_link();
 
         std::unique_ptr<nts::Circuit> create_circuit(std::vector<std::string> _all_chipset);
@@ -50,10 +49,6 @@ class Parser {
 
         void set_chipset_lines();
         void set_links_lines();
-        void recup_chipsets();
-
-        //void create_all_pins();
-        //void create_all_links();
 
     private:
         std::string _path;
@@ -64,7 +59,5 @@ class Parser {
         std::vector<std::string> _all_chipset;
         std::vector<Chipset> chipsets;
 
-        bool _file_is_ok = true;
-        bool _chipset_first = false;
         std::vector<Link> _link_vector;
 };

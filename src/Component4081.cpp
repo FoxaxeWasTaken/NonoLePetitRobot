@@ -58,8 +58,6 @@ nts::AndComponent &nts::Component4081::getAnd(std::size_t index)
 
 nts::Tristate nts::Component4081::compute(std::size_t pin)
 {
-    if (pin == 0 || pin > getNbPins())
-        throw std::out_of_range("4081: Pin out of range");
     if (pin == 3)
         return getAnd(0).compute(3);
     if (pin == 4)

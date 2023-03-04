@@ -22,9 +22,7 @@ nts::TrueComponent::TrueComponent(nts::TrueComponent const &other)
 
 nts::Tristate nts::TrueComponent::compute(std::size_t pin)
 {
-    if (pin != 1) {
-        throw std::out_of_range("Pin out of range");
-    }
+    (void) pin;
     return nts::TRUE;
 }
 
@@ -42,9 +40,7 @@ nts::FalseComponent::FalseComponent(nts::FalseComponent const &other)
 
 nts::Tristate nts::FalseComponent::compute(std::size_t pin)
 {
-    if (pin != 1) {
-        throw std::out_of_range("Pin out of range");
-    }
+    (void) pin;
     return nts::FALSE;
 }
 
@@ -62,9 +58,7 @@ nts::InputComponent::InputComponent(nts::InputComponent const &other)
 
 nts::Tristate nts::InputComponent::compute(std::size_t pin)
 {
-    if (pin != 1) {
-        throw std::out_of_range("Pin out of range");
-    }
+    (void) pin;
     return getPin(1).getValue();
 }
 
@@ -82,9 +76,7 @@ nts::OutputComponent::OutputComponent(nts::OutputComponent const &other)
 
 nts::Tristate nts::OutputComponent::compute(std::size_t pin)
 {
-    if (pin != 1) {
-        throw std::out_of_range("Pin out of range");
-    }
+    (void) pin;
     return getPin(1).computePrev();
 }
 
@@ -102,9 +94,7 @@ nts::ClockComponent::ClockComponent(nts::ClockComponent const &other)
 
 nts::Tristate nts::ClockComponent::compute(std::size_t pin)
 {
-    if (pin != 1) {
-        throw std::out_of_range("Pin out of range");
-    }
+    (void) pin;
     return getPin(1).getValue();
 }
 

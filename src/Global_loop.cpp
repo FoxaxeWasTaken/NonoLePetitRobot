@@ -63,8 +63,6 @@ void Global_loop::check_value(std::string input)
         state = nts::Tristate::FALSE;
     else if (value == "1")
         state = nts::Tristate::TRUE;
-    else
-        throw ("there is error");
 
     if (dynamic_cast<nts::InputComponent *>(_circuit->getComponent(_name).get())) {
         static_cast<nts::InputComponent *>(_circuit->getComponent(_name).get())->setBuf(true);

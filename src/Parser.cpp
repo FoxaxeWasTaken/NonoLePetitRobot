@@ -22,12 +22,12 @@ Parser::~Parser()
 void Parser::check_path()
 {
     if (_path.find(".nts") == std::string::npos) {
-        std::cerr << "Error: file is not a .nts file" << std::endl;
-        exit(84);
+        throw std::invalid_argument("checkPath: file is not a .nts");
     }
     size_t pos = _path.find(".nts");
-    if ((pos + 4) != _path.length())
-        throw ("file is not a .nts");
+    if ((pos + 4) != _path.length()) {
+        throw std::invalid_argument("checkPath: file is not a .nts");
+    }
 }
 
 std::vector<std::string> Parser::get_all_file()
@@ -44,8 +44,9 @@ void Parser::parse_the_file()
         while (getline(file, line))
             _all_file.push_back(line);
         file.close();
-    } else
-        std::cout << "Unable to open file" << std::endl;
+    } else {
+        throw std::runtime_error("getAllFiles: file could not be opened");
+    }
 }
 
 void Parser::print_all_lines(std::vector<std::string> lines)
@@ -109,18 +110,18 @@ void Parser::delete_empty_lines()
     }
 }
 
-bool Parser::check_if_good_order()
+void Parser::check_if_good_order()
 {
+    bool chipset = false;
+
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
         if ((*it).compare(".chipsets:") == 0)
-            this->_chipset_first = true;
-        if ((*it).compare(".links:") == 0 && this->_chipset_first == true) {
-            this->_file_is_ok = true;
-            return this->_file_is_ok;
+            chipset = true;
+        if ((*it).compare(".links:") == 0 && chipset) {
+            return;
         }
     }
-    std::cerr << "Error in file: missing instruction or bad order" << std::endl;
-    return (this->_file_is_ok = false);
+    throw std::invalid_argument("file is not in the good order");
 }
 
 void Parser::set_chipset_lines()
@@ -183,7 +184,7 @@ void Parser::count_chipset_and_link()
             link++;
     }
     if (chip != 1 || link != 1)
-        throw(std::runtime_error("bad file"));
+        throw std::invalid_argument("countChipsetAndLink: too many or too few chipset or link");
 
 }
 

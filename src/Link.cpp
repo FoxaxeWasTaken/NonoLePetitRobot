@@ -17,7 +17,7 @@ void Link::set_component_1()
 
     pos = _line.find(delimiter);
     if (pos == std::string::npos)
-        throw("error link");
+        throw std::invalid_argument("setComponent: delimiter found");
     token = _line.substr(0, pos);
     component_1 = token;
     _line.erase(0, pos + delimiter.length());
@@ -34,7 +34,7 @@ void Link::set_component_2()
 
     pos = _line.find(delimiter);
     if (pos == std::string::npos)
-        throw("error link");
+        throw std::invalid_argument("setComponent: no delimiter found");
     token = _line.substr(0, pos);
     component_2 = token;
     _line.erase(0, pos + delimiter.length());
@@ -51,7 +51,7 @@ void Link::set_pin_1()
 
     pos = _line.find(delimiter);
     if (pos == std::string::npos)
-        throw("error link");
+        throw std::invalid_argument("setComponent: invalid parsing in links");
     token = _line.substr(0, pos);
     pin_1 = token;
     _line.erase(0, pos + delimiter.length());

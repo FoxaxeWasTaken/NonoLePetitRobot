@@ -58,8 +58,6 @@ nts::OrComponent &nts::Component4071::getOr(std::size_t index)
 
 nts::Tristate nts::Component4071::compute(std::size_t pin)
 {
-    if (pin == 0 || pin > getNbPins())
-        throw std::out_of_range("4071: Pin out of range");
     if (pin == 3)
         return getOr(0).compute(3);
     if (pin == 4)
