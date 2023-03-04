@@ -22,6 +22,7 @@ int main(int argc, char **argv)
     parser.transform_tab_into_space();
     parser.delete_unwanted_trailing_space();
     parser.delete_empty_lines();
+    parser.count_chipset_and_link();
     if (parser.check_if_good_order() == false)
         exit(84);
     parser.set_chipset_lines();

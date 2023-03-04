@@ -41,6 +41,7 @@ class Parser {
         bool check_file_is_ok(){return _file_is_ok;};
         bool check_chipset_type(std::string type);
         bool check_if_good_order();
+        void count_chipset_and_link();
 
         std::unique_ptr<nts::Circuit> create_circuit(std::vector<std::string> _all_chipset);
         std::string name_component(std::string lines);

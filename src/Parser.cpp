@@ -171,6 +171,22 @@ void Parser::set_links_lines()
     }
 }
 
+void Parser::count_chipset_and_link()
+{
+    int chip = 0;
+    int link = 0;
+
+    for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
+        if (it->compare(".chipsets:") == 0)
+            chip++;
+        if (it->compare(".links:") == 0)
+            link++;
+    }
+    if (chip != 1 || link != 1)
+        throw(std::runtime_error("bad file"));
+
+}
+
 std::string Parser::name_component(std::string lines)
 {
     std::string name;
