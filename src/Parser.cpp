@@ -76,16 +76,12 @@ void Parser::delete_unwanted_trailing_space()
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
         if ((*it).find(' ') != std::string::npos) {
             for (size_t i = 0; (*it).data()[i] != '\0'; i++ ) {
-                if ((*it).data()[i] != ' ')
-                    continue;
-                else {
-                    if (((*it).data()[i] == ' ' && ((*it).data()[i + 1]) == ' ') || (*it).data()[0] == ' ') {
-                        (*it).erase(i, 1);
-                        i--;
-                    }
-                    if (i == it->length() - 1 && it->data()[i] == ' ')
-                        (*it).erase(i, 1);
+                if (((*it).data()[i] == ' ' && ((*it).data()[i + 1]) == ' ') || (*it).data()[0] == ' ') {
+                    (*it).erase(i, 1);
+                    i--;
                 }
+                if (i == it->length() - 1 && it->data()[i] == ' ')
+                    (*it).erase(i, 1);
             }
         }
     }
@@ -106,7 +102,7 @@ void Parser::transform_tab_into_space()
 void Parser::delete_empty_lines()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
-        if ((*it).compare("\0") == 0)
+        if ((*it).compare("\n") == 0)
             _all_lines.erase(it);
     }
 }
