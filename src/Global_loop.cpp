@@ -106,7 +106,7 @@ bool Global_loop::check_command(std::string input)
     size_t pos = 0;
 
     pos = input.find(delimiter);
-    if (input.data()[pos + 1] != '0' && input.data()[pos + 1] != '1' && input.data()[pos + 1] != 'U')
+    if ((input.data()[pos + 1] != '0' && input.data()[pos + 1] != '1' && input.data()[pos + 1] != 'U') || input.data()[pos + 2] != '\0')
         return false;
     if (input.data()[pos - 1] == ' ' || input.data()[pos - 1] == '\t')
         return false;
