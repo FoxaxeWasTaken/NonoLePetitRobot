@@ -30,6 +30,46 @@ void Parser::check_path()
     }
 }
 
+bool Parser::load_file()
+{
+    try {
+        check_path();
+    } catch (std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+    try {
+        parse_the_file();
+    } catch (std::runtime_error &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+    delete_comment();
+    transform_tab_into_space();
+    delete_unwanted_trailing_space();
+    delete_empty_lines();
+    try {
+        count_chipset_and_link();
+    } catch (std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+    try {
+        check_if_good_order();
+    } catch (std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+    set_chipset_lines();
+    try {
+    set_links_lines();
+    } catch (std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+    return true;
+}
+
 std::vector<std::string> Parser::get_all_file()
 {
     return _all_file;

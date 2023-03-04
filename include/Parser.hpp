@@ -29,6 +29,7 @@ class Parser {
         void delete_comment();
         void delete_empty_lines();
         void transform_tab_into_space();
+        bool load_file();
 
         std::vector<std::string> get_all_file();
         std::vector<std::string> get_all_lines(){return _all_lines;};

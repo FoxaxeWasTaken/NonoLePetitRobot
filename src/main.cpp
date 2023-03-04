@@ -17,41 +17,8 @@ int main(int argc, char **argv)
         return 84;
     std::shared_ptr<nts::Circuit> circuit;
     Parser parser(argv[1]);
-    try {
-        parser.check_path();
-    } catch (std::invalid_argument &e) {
-        std::cerr << e.what() << std::endl;
+    if (!parser.load_file())
         return 84;
-    }
-    try {
-        parser.parse_the_file();
-    } catch (std::runtime_error &e) {
-        std::cerr << e.what() << std::endl;
-        return 84;
-    }
-    parser.delete_comment();
-    parser.transform_tab_into_space();
-    parser.delete_unwanted_trailing_space();
-    parser.delete_empty_lines();
-    try {
-        parser.count_chipset_and_link();
-    } catch (std::invalid_argument &e) {
-        std::cerr << e.what() << std::endl;
-        return 84;
-    }
-    try {
-        parser.check_if_good_order();
-    } catch (std::invalid_argument &e) {
-        std::cerr << e.what() << std::endl;
-        return 84;
-    }
-    parser.set_chipset_lines();
-    try {
-    parser.set_links_lines();
-    } catch (std::invalid_argument &e) {
-        std::cerr << e.what() << std::endl;
-        return 84;
-    }
     try {
     circuit = parser.create_circuit(parser.get_chipset_lines());
     } catch (std::invalid_argument &e) {
