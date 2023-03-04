@@ -123,14 +123,15 @@ void Global_loop::global_loop()
         ctrInt = 0;
         if (input == "exit") {
             exit(0);
-            continue;
         }
         if (input == "simulate") {
             _circuit->simulate(1);
+            std::cout << "> ";
             continue;
         }
         if (input == "display") {
             _circuit->display();
+            std::cout << "> ";
             continue;
         }
         if (input == "loop") {
