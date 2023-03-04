@@ -22,12 +22,52 @@ Parser::~Parser()
 void Parser::check_path()
 {
     if (_path.find(".nts") == std::string::npos) {
-        std::cerr << "Error: file is not a .nts file" << std::endl;
-        exit(84);
+        throw std::invalid_argument("checkPath: file is not a .nts");
     }
     size_t pos = _path.find(".nts");
-    if ((pos + 4) != _path.length())
-        throw ("file is not a .nts");
+    if ((pos + 4) != _path.length()) {
+        throw std::invalid_argument("checkPath: file is not a .nts");
+    }
+}
+
+bool Parser::load_file()
+{
+    try {
+        check_path();
+    } catch (std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+    try {
+        parse_the_file();
+    } catch (std::runtime_error &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+    delete_comment();
+    transform_tab_into_space();
+    delete_unwanted_trailing_space();
+    delete_empty_lines();
+    try {
+        count_chipset_and_link();
+    } catch (std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+    try {
+        check_if_good_order();
+    } catch (std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+    set_chipset_lines();
+    try {
+    set_links_lines();
+    } catch (std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }
+    return true;
 }
 
 std::vector<std::string> Parser::get_all_file()
@@ -44,8 +84,9 @@ void Parser::parse_the_file()
         while (getline(file, line))
             _all_file.push_back(line);
         file.close();
-    } else
-        std::cout << "Unable to open file" << std::endl;
+    } else {
+        throw std::runtime_error("getAllFiles: file could not be opened");
+    }
 }
 
 void Parser::print_all_lines(std::vector<std::string> lines)
@@ -76,33 +117,51 @@ void Parser::delete_unwanted_trailing_space()
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
         if ((*it).find(' ') != std::string::npos) {
             for (size_t i = 0; (*it).data()[i] != '\0'; i++ ) {
-                if ((*it).data()[i] != ' ')
-                    continue;
-                else {
-                    if (((*it).data()[i] == ' ' && ((*it).data()[i + 1]) == ' ') || (*it).data()[0] == ' ') {
-                        (*it).erase(i, 1);
-                        i--;
-                    }
-                    if (i == it->length() - 1 && it->data()[i] == ' ')
-                        (*it).erase(i, 1);
+                if (((*it).data()[i] == ' ' && ((*it).data()[i + 1]) == ' ') || (*it).data()[0] == ' ') {
+                    (*it).erase(i, 1);
+                    i--;
                 }
+                if (i == it->length() - 1 && it->data()[i] == ' ')
+                    (*it).erase(i, 1);
             }
         }
     }
 }
 
-bool Parser::check_if_good_order()
+void Parser::transform_tab_into_space()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
-        if ((*it).compare(".chipsets:") == 0)
-            this->_chipset_first = true;
-        if ((*it).compare(".links:") == 0 && this->_chipset_first == true) {
-            this->_file_is_ok = true;
-            return this->_file_is_ok;
+        for (size_t i = 0; (*it).data()[i] != '\0'; i++ ) {
+            if ((*it).data()[i] != '\t')
+                continue;
+            else
+                (*it).replace(i, 1, " ");
         }
     }
-    std::cerr << "Error in file: missing instruction or bad order" << std::endl;
-    return (this->_file_is_ok = false);
+}
+
+void Parser::delete_empty_lines()
+{
+    for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
+        if ((*it).empty()) {
+            _all_lines.erase(it);
+            it--;
+        }
+    }
+}
+
+void Parser::check_if_good_order()
+{
+    bool chipset = false;
+
+    for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
+        if ((*it).compare(".chipsets:") == 0)
+            chipset = true;
+        if ((*it).compare(".links:") == 0 && chipset) {
+            return;
+        }
+    }
+    throw std::invalid_argument("file is not in the good order");
 }
 
 void Parser::set_chipset_lines()
@@ -151,6 +210,22 @@ void Parser::set_links_lines()
             return;
         }
     }
+}
+
+void Parser::count_chipset_and_link()
+{
+    int chip = 0;
+    int link = 0;
+
+    for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
+        if (it->compare(".chipsets:") == 0)
+            chip++;
+        if (it->compare(".links:") == 0)
+            link++;
+    }
+    if (chip != 1 || link != 1)
+        throw std::invalid_argument("countChipsetAndLink: too many or too few chipset or link");
+
 }
 
 std::string Parser::name_component(std::string lines)

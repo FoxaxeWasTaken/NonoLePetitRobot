@@ -27,6 +27,10 @@ class Parser {
         void parse_the_file();
         void check_path();
         void delete_comment();
+        void delete_empty_lines();
+        void transform_tab_into_space();
+        bool load_file();
+
         std::vector<std::string> get_all_file();
         std::vector<std::string> get_all_lines(){return _all_lines;};
         std::vector<std::string> get_chipset_lines(){return _chipset_lines;};
@@ -35,9 +39,9 @@ class Parser {
         std::vector<Link> get_links(){return _link_vector;};
 
         void delete_unwanted_trailing_space();
-        bool check_file_is_ok(){return _file_is_ok;};
         bool check_chipset_type(std::string type);
-        bool check_if_good_order();
+        void check_if_good_order();
+        void count_chipset_and_link();
 
         std::unique_ptr<nts::Circuit> create_circuit(std::vector<std::string> _all_chipset);
         std::string name_component(std::string lines);
@@ -46,10 +50,6 @@ class Parser {
 
         void set_chipset_lines();
         void set_links_lines();
-        void recup_chipsets();
-
-        //void create_all_pins();
-        //void create_all_links();
 
     private:
         std::string _path;
@@ -60,7 +60,5 @@ class Parser {
         std::vector<std::string> _all_chipset;
         std::vector<Chipset> chipsets;
 
-        bool _file_is_ok = true;
-        bool _chipset_first = false;
         std::vector<Link> _link_vector;
 };

@@ -25,9 +25,6 @@ nts::AndComponent::AndComponent(const AndComponent &other)
 
 nts::Tristate nts::AndComponent::compute(std::size_t pin)
 {
-    if (pin > getNbPins() || pin == 0) {
-        throw std::out_of_range("AndComponent::compute: pin out of range");
-    }
     if (pin == 1) {
         return getPin(1).computePrev();
     }
@@ -62,9 +59,6 @@ nts::OrComponent::OrComponent(nts::OrComponent const &other)
 
 nts::Tristate nts::OrComponent::compute(std::size_t pin)
 {
-    if (pin > getNbPins() || pin == 0) {
-        throw std::out_of_range("OrComponent::compute: pin out of range");
-    }
     if (pin == 1) {
         return getPin(1).computePrev();
     }
@@ -99,9 +93,6 @@ nts::XorComponent::XorComponent(nts::XorComponent const &other)
 
 nts::Tristate nts::XorComponent::compute(std::size_t pin)
 {
-    if (pin > getNbPins() || pin == 0) {
-        throw std::out_of_range("XorComponent::compute: pin out of range");
-    }
     if (pin == 1) {
         return getPin(1).computePrev();
     }
@@ -137,9 +128,6 @@ nts::NotComponent::NotComponent(nts::NotComponent const &other)
 
 nts::Tristate nts::NotComponent::compute(std::size_t pin)
 {
-    if (pin > getNbPins() || pin == 0) {
-        throw std::out_of_range("NotComponent::compute: pin out of range");
-    }
     if (pin == 1) {
         return getPin(1).computePrev();
     }

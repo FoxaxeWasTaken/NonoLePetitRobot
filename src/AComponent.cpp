@@ -12,8 +12,7 @@
 nts::AComponent::AComponent(std::string name, size_t nbPins, std::vector<nts::Pin> pins)
     : _name(name), _nbPins(nbPins), _pins(pins)
 {
-    if (pins.size() != nbPins)
-        throw std::invalid_argument("Number of pins is not equal to the number of pins in the vector");
+
 }
 
 nts::AComponent::AComponent(const AComponent &other)
@@ -39,8 +38,6 @@ std::vector<nts::Pin> nts::AComponent::getPins() const
 
 nts::Pin &nts::AComponent::getPin(size_t index)
 {
-    if (index > getNbPins() || index == 0)
-        throw std::out_of_range("getPin: Index out of range");
     for (auto &pin : _pins) {
         if (pin.getIdxPin() == index)
             return pin;
@@ -61,7 +58,7 @@ void nts::AComponent::setLink(std::size_t pin, nts::IComponent &other, std::size
         other.getPin(otherPin).addNextPin(std::make_shared<nts::Pin>(getPin(pin)));
         getPin(pin).addPrevPin(std::make_shared<nts::Pin>(other.getPin(otherPin)));
     } else {
-        throw std::invalid_argument("Pin type is not compatible");
+        throw std::invalid_argument("sedLink: Pin type is not compatible");
     }
 }
 

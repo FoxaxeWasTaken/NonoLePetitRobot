@@ -58,8 +58,6 @@ nts::NotComponent &nts::Component4069::getNot(std::size_t index)
 
 nts::Tristate nts::Component4069::compute(std::size_t pin)
 {
-    if (pin == 0 || pin > getNbPins())
-        throw std::out_of_range("4069Component: Pin out of range.");
     if (pin == 2) {
         return getNot(0).compute(2);
     }
