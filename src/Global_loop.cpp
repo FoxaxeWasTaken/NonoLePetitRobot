@@ -42,7 +42,7 @@ void Global_loop::check_if_name_valid(std::string input)
     try {
         _circuit->getComponent(name);
     } catch (std::runtime_error &e) {
-        std::cout << e.what();
+        return;
     }
     _name = name;
 }
@@ -147,7 +147,7 @@ void Global_loop::global_loop()
                 try {
                     modif_value_component(input);
                 } catch(std::runtime_error &e) {
-                    std::cerr << "Bad command" << std::endl;
+                    std::cerr << e.what() << std::endl;
                 }
             } else
                 std::cerr << "Bad command" << std::endl;
