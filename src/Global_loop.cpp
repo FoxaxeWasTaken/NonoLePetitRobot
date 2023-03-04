@@ -143,6 +143,8 @@ void Global_loop::global_loop()
                 }
             } else
                 std::cerr << "Bad command" << std::endl;
+        } else {
+            std::cerr << "Bad command" << std::endl;
         }
         std::cout << "> ";
     }
