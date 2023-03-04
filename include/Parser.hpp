@@ -27,6 +27,7 @@ class Parser {
         void parse_the_file();
         void check_path();
         void delete_comment();
+        void delete_empty_lines();
         std::vector<std::string> get_all_file();
         std::vector<std::string> get_all_lines(){return _all_lines;};
         std::vector<std::string> get_chipset_lines(){return _chipset_lines;};

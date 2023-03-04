@@ -74,20 +74,30 @@ void Parser::delete_comment()
 void Parser::delete_unwanted_trailing_space()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
-        if ((*it).find(' ') != std::string::npos) {
+        if ((*it).find(' ') != std::string::npos || (it->find('\t') != std::string::npos)) {
             for (size_t i = 0; (*it).data()[i] != '\0'; i++ ) {
-                if ((*it).data()[i] != ' ')
+                if ((*it).data()[i] != ' ' && it->data()[i] != '\t')
                     continue;
                 else {
-                    if (((*it).data()[i] == ' ' && ((*it).data()[i + 1]) == ' ') || (*it).data()[0] == ' ') {
+                    if ((((*it).data()[i] == ' ' || (*it).data()[i] == '\t') &&
+                    (((*it).data()[i + 1] == ' ') || it->data()[i + 1] == '\t')) ||
+                    ((*it).data()[0] == ' ' || it->data()[0] == '\t')) {
                         (*it).erase(i, 1);
                         i--;
                     }
-                    if (i == it->length() - 1 && it->data()[i] == ' ')
+                    if (i == it->length() - 1 && (it->data()[i] == ' ' || it->data()[i] == '\t'))
                         (*it).erase(i, 1);
                 }
             }
         }
+    }
+}
+
+void Parser::delete_empty_lines()
+{
+    for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
+        if (it->empty())
+            _all_lines.erase(it);
     }
 }
 
