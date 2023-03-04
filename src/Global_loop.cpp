@@ -119,6 +119,7 @@ void Global_loop::global_loop()
     std::cout << "> ";
 
     while (std::getline(std::cin, input)) {
+        input = rm_space_before_and_after(input);
         ctrInt = 0;
         if (input == "exit")
             exit(0);
@@ -134,7 +135,6 @@ void Global_loop::global_loop()
             }
         }
         if (input.find("=") != std::string::npos) {
-            input = rm_space_before_and_after(input);
             if (check_command(input)) {
                 try {
                     modif_value_component(input);
