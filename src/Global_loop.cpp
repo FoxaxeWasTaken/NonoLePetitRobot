@@ -121,18 +121,25 @@ void Global_loop::global_loop()
     while (std::getline(std::cin, input)) {
         input = rm_space_before_and_after(input);
         ctrInt = 0;
-        if (input == "exit")
+        if (input == "exit") {
             exit(0);
-        if (input == "simulate")
+            continue;
+        }
+        if (input == "simulate") {
             _circuit->simulate(1);
-        if (input == "display")
+            continue;
+        }
+        if (input == "display") {
             _circuit->display();
+            continue;
+        }
         if (input == "loop") {
             signal(SIGINT, &sigint_handler);
             while (ctrInt == 0) {
                 _circuit->simulate(1);
                 _circuit->display();
             }
+            continue;
         }
         if (input.find("=") != std::string::npos) {
             if (check_command(input)) {
