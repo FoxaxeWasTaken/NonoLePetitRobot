@@ -74,18 +74,16 @@ void Parser::delete_comment()
 void Parser::delete_unwanted_trailing_space()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
-        if ((*it).find(' ') != std::string::npos || (it->find('\t') != std::string::npos)) {
+        if ((*it).find(' ') != std::string::npos) {
             for (size_t i = 0; (*it).data()[i] != '\0'; i++ ) {
-                if ((*it).data()[i] != ' ' && it->data()[i] != '\t')
+                if ((*it).data()[i] != ' ')
                     continue;
                 else {
-                    if ((((*it).data()[i] == ' ' || (*it).data()[i] == '\t') &&
-                    (((*it).data()[i + 1] == ' ') || it->data()[i + 1] == '\t')) ||
-                    ((*it).data()[0] == ' ' || it->data()[0] == '\t')) {
+                    if (((*it).data()[i] == ' ' && ((*it).data()[i + 1]) == ' ') || (*it).data()[0] == ' ') {
                         (*it).erase(i, 1);
                         i--;
                     }
-                    if (i == it->length() - 1 && (it->data()[i] == ' ' || it->data()[i] == '\t'))
+                    if (i == it->length() - 1 && it->data()[i] == ' ')
                         (*it).erase(i, 1);
                 }
             }
@@ -93,10 +91,22 @@ void Parser::delete_unwanted_trailing_space()
     }
 }
 
+void Parser::transform_tab_into_space()
+{
+    for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
+        for (size_t i = 0; (*it).data()[i] != '\0'; i++ ) {
+            if ((*it).data()[i] != '\t')
+                continue;
+            else
+                (*it).replace(i, 1, " ");
+        }
+    }
+}
+
 void Parser::delete_empty_lines()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
-        if (it->empty())
+        if ((*it).compare("\0") == 0)
             _all_lines.erase(it);
     }
 }

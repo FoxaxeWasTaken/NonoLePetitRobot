@@ -19,6 +19,7 @@ int main(int argc, char **argv)
     parser.check_path();
     parser.parse_the_file();
     parser.delete_comment();
+    parser.transform_tab_into_space();
     parser.delete_unwanted_trailing_space();
     parser.delete_empty_lines();
     if (parser.check_if_good_order() == false)
