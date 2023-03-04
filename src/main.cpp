@@ -19,9 +19,9 @@ int main(int argc, char **argv)
     parser.check_path();
     parser.parse_the_file();
     parser.delete_comment();
+    parser.delete_unwanted_trailing_space();
     if (parser.check_if_good_order() == false)
         exit(84);
-    parser.delete_unwanted_trailing_space();
     parser.set_chipset_lines();
     parser.set_links_lines();
     std::shared_ptr<nts::Circuit> circuit = parser.create_circuit(parser.get_chipset_lines());

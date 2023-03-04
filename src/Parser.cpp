@@ -75,14 +75,16 @@ void Parser::delete_unwanted_trailing_space()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
         if ((*it).find(' ') != std::string::npos) {
-            for (int i = 0; (*it).data()[i] != '\0'; i++ ) {
+            for (size_t i = 0; (*it).data()[i] != '\0'; i++ ) {
                 if ((*it).data()[i] != ' ')
                     continue;
                 else {
-                    if (((*it).data()[i] == ' ' && ((*it).data()[i + 1]) == ' ') || (*it).data()[0] == ' ' || (*it).data()[(*it).length() - 1] == ' ') {
+                    if (((*it).data()[i] == ' ' && ((*it).data()[i + 1]) == ' ') || (*it).data()[0] == ' ') {
                         (*it).erase(i, 1);
                         i--;
                     }
+                    if (i == it->length() - 1 && it->data()[i] == ' ')
+                        (*it).erase(i, 1);
                 }
             }
         }
