@@ -31,7 +31,7 @@ void nts::Circuit::setLink(std::string const &name1, std::size_t pin1, std::stri
 
 void nts::Circuit::simulate(std::size_t tick)
 {
-    addTick(tick);
+    setTick(tick + getTick());
     for (auto &component : _components) {
         component->simulate(_tick);
     }
@@ -51,11 +51,6 @@ std::unique_ptr<nts::IComponent> &nts::Circuit::getComponent(std::string const &
     throw std::runtime_error("getComponent: Component not found");
 }
 
-void nts::Circuit::addTick(std::size_t tick)
-{
-    _tick += tick;
-}
-
 void nts::Circuit::display()
 {
     std::cout << "tick: " << _tick << std::endl;
@@ -71,4 +66,14 @@ void nts::Circuit::display()
             std::cout << "  " << component->getName() << ": " << component->getPin(1).getValue() << std::endl;
         }
     }
+}
+
+std::size_t nts::Circuit::getTick() const
+{
+    return _tick;
+}
+
+void nts::Circuit::setTick(std::size_t tick)
+{
+    _tick = tick;
 }
