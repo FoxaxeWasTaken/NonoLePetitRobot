@@ -20,7 +20,8 @@ namespace nts {
             void simulate(std::size_t tick);
             void display();
             std::unique_ptr<nts::IComponent> &getComponent(std::string const &name);
-            void addTick(std::size_t tick);
+            std::size_t getTick() const;
+            void setTick(std::size_t tick);
 
         private:
             std::vector<std::unique_ptr<nts::IComponent>> _components;
