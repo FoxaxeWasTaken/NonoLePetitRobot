@@ -33,13 +33,13 @@ nts::Tristate nts::AndComponent::compute(std::size_t pin)
     }
     nts::Tristate pin1 = getPin(1).computePrev();
     nts::Tristate pin2 = getPin(2).computePrev();
-    if (pin1 == nts::Tristate::UNDEFINED || pin2 == nts::Tristate::UNDEFINED) {
-        return nts::Tristate::UNDEFINED;
+    if (pin1 == nts::Tristate::FALSE || pin2 == nts::Tristate::FALSE) {
+        return nts::Tristate::FALSE;
     }
     if (pin1 == nts::Tristate::TRUE && pin2 == nts::Tristate::TRUE) {
         return nts::Tristate::TRUE;
     }
-    return nts::Tristate::FALSE;
+    return nts::Tristate::UNDEFINED;
 }
 
 nts::OrComponent::OrComponent(std::string name)
@@ -67,13 +67,13 @@ nts::Tristate nts::OrComponent::compute(std::size_t pin)
     }
     nts::Tristate pin1 = getPin(1).computePrev();
     nts::Tristate pin2 = getPin(2).computePrev();
-    if (pin1 == nts::Tristate::UNDEFINED || pin2 == nts::Tristate::UNDEFINED) {
-        return nts::Tristate::UNDEFINED;
-    }
     if (pin1 == nts::Tristate::TRUE || pin2 == nts::Tristate::TRUE) {
         return nts::Tristate::TRUE;
     }
-    return nts::Tristate::FALSE;
+    if (pin1 == nts::Tristate::FALSE && pin2 == nts::Tristate::FALSE) {
+        return nts::Tristate::FALSE;
+    }
+    return nts::Tristate::UNDEFINED;
 }
 
 nts::XorComponent::XorComponent(std::string name)
