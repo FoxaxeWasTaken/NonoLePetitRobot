@@ -35,11 +35,6 @@ void nts::Circuit::simulate(std::size_t tick)
     for (auto &component : _components) {
         component->simulate(_tick);
     }
-    for (auto &component : _components) {
-        for (std::size_t i = 1; i <= component->getNbPins(); i++) {
-            component->getPin(i).setValue(component->compute(i));
-        }
-    }
 }
 
 std::unique_ptr<nts::IComponent> &nts::Circuit::getComponent(std::string const &name)
@@ -57,13 +52,13 @@ void nts::Circuit::display()
     std::cout << "input(s):" << std::endl;
     for (auto &component : _components) {
         if (dynamic_cast<nts::InputComponent *>(component.get()) || dynamic_cast<nts::ClockComponent *>(component.get())) {
-            std::cout << "  " << component->getName() << ": " << component->getPin(1).getValue() << std::endl;
+            std::cout << "  " << component->getName() << ": " << component->compute(1) << std::endl;
         }
     }
     std::cout << "output(s):" << std::endl;
     for (auto &component : _components) {
         if (dynamic_cast<nts::OutputComponent *>(component.get())) {
-            std::cout << "  " << component->getName() << ": " << component->getPin(1).getValue() << std::endl;
+            std::cout << "  " << component->getName() << ": " << component->compute(1) << std::endl;
         }
     }
 }

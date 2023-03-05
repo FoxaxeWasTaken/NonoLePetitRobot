@@ -31,7 +31,6 @@ int main(int argc, char **argv)
         std::cerr << e.what() << std::endl;
         return 84;
     }
-    circuit->simulate(0);
     nts::Global_loop main_loop(circuit);
     main_loop.global_loop();
     return 0;
