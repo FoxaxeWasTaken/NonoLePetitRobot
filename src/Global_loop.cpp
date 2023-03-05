@@ -25,13 +25,13 @@ void sigint_handler(int sig)
     ctrInt = 1;
 }
 
-Global_loop::Global_loop(std::shared_ptr<nts::Circuit> circuit)
+nts::Global_loop::Global_loop(std::shared_ptr<nts::Circuit> circuit)
 {
     this->_circuit = circuit;
 };
 
 
-void Global_loop::check_if_name_valid(std::string input)
+void nts::Global_loop::check_if_name_valid(std::string input)
 {
     std::string name;
     std::string delimiter = "=";
@@ -47,7 +47,7 @@ void Global_loop::check_if_name_valid(std::string input)
     _name = name;
 }
 
-void Global_loop::check_value(std::string input)
+void nts::Global_loop::check_value(std::string input)
 {
     std::string value;
     nts::Tristate state;
@@ -73,14 +73,14 @@ void Global_loop::check_value(std::string input)
     }
 }
 
-void Global_loop::modif_value_component(std::string input)
+void nts::Global_loop::modif_value_component(std::string input)
 {
     check_if_name_valid(input);
     check_value(input);
 }
 
 
-std::string Global_loop::rm_space_before_and_after(std::string input)
+std::string nts::Global_loop::rm_space_before_and_after(std::string input)
 {
     for (size_t i = 0; i < input.size(); i++) {
         if ((input.data()[i] == ' ' || input.data()[i] == '\t')) {
@@ -98,7 +98,7 @@ std::string Global_loop::rm_space_before_and_after(std::string input)
     return input;
 }
 
-bool Global_loop::check_command(std::string input)
+bool nts::Global_loop::check_command(std::string input)
 {
     std::string delimiter = "=";
     size_t pos = 0;
@@ -111,7 +111,7 @@ bool Global_loop::check_command(std::string input)
     return true;
 }
 
-void Global_loop::global_loop()
+void nts::Global_loop::global_loop()
 {
     std::string input;
     std::cout << "> ";

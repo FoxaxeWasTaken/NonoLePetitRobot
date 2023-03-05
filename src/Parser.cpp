@@ -10,16 +10,16 @@
 #include "ComponentFactory.hpp"
 #include "Circuit.hpp"
 
-Parser::Parser(std::string path)
+nts::Parser::Parser(std::string path)
     : _path(path)
 {
 };
 
-Parser::~Parser()
+nts::Parser::~Parser()
 {
 };
 
-void Parser::check_path()
+void nts::Parser::check_path()
 {
     if (_path.find(".nts") == std::string::npos) {
         throw std::invalid_argument("checkPath: file is not a .nts");
@@ -30,7 +30,7 @@ void Parser::check_path()
     }
 }
 
-bool Parser::load_file()
+bool nts::Parser::load_file()
 {
     try {
         check_path();
@@ -70,12 +70,12 @@ bool Parser::load_file()
     return true;
 }
 
-std::vector<std::string> Parser::get_all_file()
+std::vector<std::string> nts::Parser::get_all_file()
 {
     return _all_file;
 };
 
-void Parser::parse_the_file()
+void nts::Parser::parse_the_file()
 {
     std::string line;
     std::ifstream file(_path);
@@ -89,14 +89,14 @@ void Parser::parse_the_file()
     }
 }
 
-void Parser::print_all_lines(std::vector<std::string> lines)
+void nts::Parser::print_all_lines(std::vector<std::string> lines)
 {
     for (auto it = lines.begin(); it != lines.end(); it++)
         std::cout << *it << '\n';
 };
 
 
-void Parser::delete_comment()
+void nts::Parser::delete_comment()
 {
     size_t pos = 0;
 
@@ -112,7 +112,7 @@ void Parser::delete_comment()
 
 };
 
-void Parser::delete_unwanted_trailing_space()
+void nts::Parser::delete_unwanted_trailing_space()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
         if ((*it).find(' ') != std::string::npos) {
@@ -128,7 +128,7 @@ void Parser::delete_unwanted_trailing_space()
     }
 }
 
-void Parser::transform_tab_into_space()
+void nts::Parser::transform_tab_into_space()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
         for (size_t i = 0; (*it).data()[i] != '\0'; i++ ) {
@@ -140,7 +140,7 @@ void Parser::transform_tab_into_space()
     }
 }
 
-void Parser::delete_empty_lines()
+void nts::Parser::delete_empty_lines()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
         if ((*it).empty()) {
@@ -150,7 +150,7 @@ void Parser::delete_empty_lines()
     }
 }
 
-void Parser::check_if_good_order()
+void nts::Parser::check_if_good_order()
 {
     bool chipset = false;
 
@@ -164,7 +164,7 @@ void Parser::check_if_good_order()
     throw std::invalid_argument("file is not in the good order");
 }
 
-void Parser::set_chipset_lines()
+void nts::Parser::set_chipset_lines()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
         if ((*it).compare(".chipsets:") == 0) {
@@ -181,7 +181,7 @@ void Parser::set_chipset_lines()
     }
 }
 
-bool Parser::check_chipset_type(std::string type)
+bool nts::Parser::check_chipset_type(std::string type)
 {
     if (type.size() != 4)
         return false;
@@ -192,13 +192,13 @@ bool Parser::check_chipset_type(std::string type)
     return true;
 }
 
-void Parser::set_links_lines()
+void nts::Parser::set_links_lines()
 {
     for (auto it = _all_lines.begin(); it != _all_lines.end(); it++) {
         if ((*it).compare(".links:") == 0) {
             it++;
             while (it != _all_lines.end()) {
-                Link link((*it));
+                nts::Link link((*it));
                 link.set_component_1();
                 link.set_pin_1();
                 link.set_component_2();
@@ -212,7 +212,7 @@ void Parser::set_links_lines()
     }
 }
 
-void Parser::count_chipset_and_link()
+void nts::Parser::count_chipset_and_link()
 {
     int chip = 0;
     int link = 0;
@@ -228,7 +228,7 @@ void Parser::count_chipset_and_link()
 
 }
 
-std::string Parser::name_component(std::string lines)
+std::string nts::Parser::name_component(std::string lines)
 {
     std::string name;
     std::string delimiter = " ";
@@ -242,7 +242,7 @@ std::string Parser::name_component(std::string lines)
     return name;
 }
 
-std::string Parser::type_component(std::string lines)
+std::string nts::Parser::type_component(std::string lines)
 {
     std::string type;
     std::string delimiter = " ";
@@ -253,7 +253,7 @@ std::string Parser::type_component(std::string lines)
     return type;
 }
 
-std::unique_ptr<nts::Circuit> Parser::create_circuit(std::vector<std::string> _all_chipset)
+std::unique_ptr<nts::Circuit> nts::Parser::create_circuit(std::vector<std::string> _all_chipset)
 {
     std::unique_ptr<nts::Circuit> circuit = std::make_unique<nts::Circuit>();
     nts::ComponentFactory factory;

@@ -16,7 +16,7 @@ int main(int argc, char **argv)
     if (argc != 2)
         return 84;
     std::shared_ptr<nts::Circuit> circuit;
-    Parser parser(argv[1]);
+    nts::Parser parser(argv[1]);
     if (!parser.load_file())
         return 84;
     try {
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
         return 84;
     }
     circuit->simulate(0);
-    Global_loop main_loop(circuit);
+    nts::Global_loop main_loop(circuit);
     main_loop.global_loop();
     return 0;
 }

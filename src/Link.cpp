@@ -7,7 +7,7 @@
 
 #include "Link.hpp"
 
-void Link::set_component_1()
+void nts::Link::set_component_1()
 {
     std::string component_1;
     std::string line = _line;
@@ -24,7 +24,7 @@ void Link::set_component_1()
     _component_1 = component_1;
 }
 
-void Link::set_component_2()
+void nts::Link::set_component_2()
 {
     std::string component_2;
     std::string line = _line;
@@ -41,7 +41,7 @@ void Link::set_component_2()
     _component_2 = component_2;
 }
 
-void Link::set_pin_1()
+void nts::Link::set_pin_1()
 {
     std::string pin_1;
     std::string line = _line;
@@ -58,7 +58,7 @@ void Link::set_pin_1()
     _pin_1 = std::stoi(pin_1);
 }
 
-void Link::set_pin_2()
+void nts::Link::set_pin_2()
 {
     _pin_2 = std::stoi(_line);
 }
